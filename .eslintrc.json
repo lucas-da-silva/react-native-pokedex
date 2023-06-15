@@ -28,16 +28,14 @@
         "react/style-prop-object": "off",
         "indent": [
             "error",
-            "tab"
+            2
         ],
         "linebreak-style": "off",
         "quotes": [
             "error",
             "single"
         ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "semi": "off",
+        "func-names": "off"
     }
 }
