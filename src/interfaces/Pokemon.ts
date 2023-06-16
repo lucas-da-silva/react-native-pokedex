@@ -1,7 +1,11 @@
+import { TypesPokemons } from '../utils'
+
 interface IPokemon {
   name: string,
   id: number
 }
+
+type TypePokemon = keyof typeof TypesPokemons
 
 export interface IPokemonDetails extends IPokemon {
   sprites: {
@@ -10,9 +14,15 @@ export interface IPokemonDetails extends IPokemon {
         front_default: string
       }
     }
-  }
+  },
+  types: {
+    type: {
+      name: TypePokemon
+    }
+  }[]
 }
 
 export interface IPokemonCard extends IPokemon {
-  uri: string
+  uri: string,
+  types: TypePokemon[]
 }

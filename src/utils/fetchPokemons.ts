@@ -1,4 +1,4 @@
-import { IPokemonCard, IPokemonDetails } from '../interfaces/Pokemon'
+import type { IPokemonCard, IPokemonDetails } from '../interfaces'
 
 const URL = 'https://pokeapi.co/api/v2/pokemon'
 
@@ -13,6 +13,7 @@ function formatPokemon(pokemon: IPokemonDetails) {
     id: pokemon.id,
     name: pokemon.name,
     uri: pokemon.sprites.other['official-artwork'].front_default,
+    types: pokemon.types.map(({ type }) => type.name),
   }
 }
 
