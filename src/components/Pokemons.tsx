@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
-import fetchPokemons from '../utils/fetchPokemons'
-import { IPokemonCard } from '../interfaces/Pokemon'
+import { fetchPokemons } from '../utils'
+import type { IPokemonCard } from '../interfaces'
 import PokemonCard from './PokemonCard'
 
 export default function Pokemons() {
@@ -19,8 +19,10 @@ export default function Pokemons() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.containerPokemons}>
         {pokemons
-        && pokemons.map(({ name, id, uri }) => (
-          <PokemonCard name={name} key={id} id={id} uri={uri} />
+        && pokemons.map(({
+          name, id, uri, types,
+        }) => (
+          <PokemonCard name={name} key={id} id={id} uri={uri} types={types} />
         ))}
       </View>
     </ScrollView>
@@ -32,6 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 })
