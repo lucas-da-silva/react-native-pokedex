@@ -1,8 +1,9 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Home } from './screens'
+import { Home, DetailsPokemon } from './screens'
+import type { IScreens } from './interfaces'
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<IScreens>()
 
 export default function Navigator() {
   return (
@@ -13,6 +14,7 @@ export default function Navigator() {
       }}
     >
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="DetailsPokemon" component={DetailsPokemon} />
     </Stack.Navigator>
   )
 }
