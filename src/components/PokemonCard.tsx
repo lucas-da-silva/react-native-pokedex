@@ -1,37 +1,45 @@
 import React from 'react'
 import {
-  View, Text, Image, StyleSheet,
+  View, Text, Image, StyleSheet, TouchableOpacity,
 } from 'react-native'
 import type { IPokemonCard } from '../interfaces'
 import { TypesPokemons } from '../utils'
 
+interface PokemonCardProps extends IPokemonCard {
+  handlePress(id: number): void;
+}
+
 export default function PokemonCard({
-  name, id, uri, types,
-}: IPokemonCard) {
+  name, id, uri, types, handlePress,
+}: PokemonCardProps) {
   return (
-    <View style={[styles.container, { backgroundColor: TypesPokemons[types[0]].color }]}>
-      <View style={styles.containerId}>
-        <Text style={styles.id}>{id.toString().padStart(3, '0')}</Text>
+    <TouchableOpacity onPress={() => handlePress(id)}>
+      <View
+        style={[styles.container, { backgroundColor: TypesPokemons[types[0]].color }]}
+      >
+        <View style={styles.containerId}>
+          <Text style={styles.id}>{id.toString().padStart(3, '0')}</Text>
+        </View>
+        <View style={styles.containerImage}>
+          <Image
+            source={{
+              uri,
+            }}
+            style={styles.image}
+          />
+        </View>
+        <Text style={styles.name}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+        <View style={styles.containerTypes}>
+          {
+            types.map((type) => (
+              <View key={type} style={styles.containerType}>
+                <Text style={styles.type}>{type}</Text>
+              </View>
+            ))
+          }
+        </View>
       </View>
-      <View style={styles.containerImage}>
-        <Image
-          source={{
-            uri,
-          }}
-          style={styles.image}
-        />
-      </View>
-      <Text style={styles.name}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
-      <View style={styles.containerTypes}>
-        {
-          types.map((type) => (
-            <View key={type} style={styles.containerType}>
-              <Text style={styles.type}>{type}</Text>
-            </View>
-          ))
-        }
-      </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginHorizontal: 7.5,
     borderRadius: 15,
-    width: 140,
+    width: 150,
     height: 210,
     alignItems: 'center',
   },

@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react'
 import {
   ScrollView, StyleSheet, View, Text, StatusBar,
 } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { fetchPokemons } from '../utils'
-import type { IPokemonCard } from '../interfaces'
+import type { IPokemonCard, IScreens } from '../interfaces'
 import PokemonCard from '../components/PokemonCard'
 
-export default function Home() {
+type HomeProps = {
+  navigation: NativeStackNavigationProp<IScreens, 'Home'>
+}
+
+export default function Home({ navigation }: HomeProps) {
   const [pokemons, setPokemons] = useState<[] | IPokemonCard[]>([])
 
   useEffect(() => {
@@ -16,6 +21,10 @@ export default function Home() {
     }
     fetchData()
   }, [])
+
+  const handleDetailsPokemon = (id:number): void => {
+    navigation.navigate('DetailsPokemon', { id })
+  }
 
   return (
     <View style={styles.container}>
@@ -32,7 +41,14 @@ export default function Home() {
         && pokemons.map(({
           name, id, uri, types,
         }) => (
-          <PokemonCard name={name} key={id} id={id} uri={uri} types={types} />
+          <PokemonCard
+            name={name}
+            key={id}
+            id={id}
+            uri={uri}
+            types={types}
+            handlePress={handleDetailsPokemon}
+          />
         ))}
         </View>
       </ScrollView>
