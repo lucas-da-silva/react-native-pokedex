@@ -19,4 +19,4 @@ export const TypesPokemons = {
   fairy: { color: '#ffabec' },
 }
 
-export type ITypesPokemons = typeof TypesPokemons
+export type ITypesPokemons = keyof typeof TypesPokemons

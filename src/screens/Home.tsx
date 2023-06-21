@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
   ScrollView, StyleSheet, View, Text, StatusBar,
 } from 'react-native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { fetchPokemons } from '../utils'
 import type { IPokemonCard, IScreens } from '../interfaces'
 import PokemonCard from '../components/PokemonCard'
