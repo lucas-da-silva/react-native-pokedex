@@ -28,7 +28,7 @@ export default function Home({ navigation }: HomeProps) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Pokédex</Text>
         <Text style={styles.subtitle}>
@@ -60,7 +60,7 @@ export default function Home({ navigation }: HomeProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f5fbfb',
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
