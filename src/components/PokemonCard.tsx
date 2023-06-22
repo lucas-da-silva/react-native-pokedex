@@ -28,7 +28,7 @@ export default function PokemonCard({
             style={styles.image}
           />
         </View>
-        <Text style={styles.name}>{name.charAt(0).toUpperCase() + name.slice(1)}</Text>
+        <Text style={styles.name}>{name}</Text>
         <View style={styles.containerTypes}>
           {
             types.map((type) => (
