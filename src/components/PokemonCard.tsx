@@ -6,7 +6,7 @@ import type { IPokemonCard } from '../interfaces'
 import { TypesPokemons } from '../utils'
 
 interface PokemonCardProps extends IPokemonCard {
-  handlePress(id: number): void;
+  handlePress(id: string): void;
 }
 
 export default function PokemonCard({

@@ -1,7 +1,7 @@
 import type { IPokemonCard, IPokemonDetails, IPokemonDetailsCard } from '../interfaces'
 
 export const formatPokemonCard = (pokemon: IPokemonDetails): IPokemonCard => ({
-  id: pokemon.id,
+  id: pokemon.id.toString().padStart(3, '0'),
   name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
   uri: pokemon.sprites.other['official-artwork'].front_default,
   types: pokemon.types.map(({ type }) => type.name),
