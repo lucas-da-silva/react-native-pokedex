@@ -2,7 +2,7 @@ import type { ITypesPokemons } from '../utils'
 
 export interface IPokemon {
   name: string,
-  id: string
+  id: number
 }
 
 export interface IPokemonCard extends IPokemon {

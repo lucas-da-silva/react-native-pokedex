@@ -22,7 +22,7 @@ export default function Home({ navigation }: HomeProps) {
     fetchData()
   }, [])
 
-  const handleDetailsPokemon = (id:number): void => {
+  const handleDetailsPokemon = (id: number): void => {
     navigation.navigate('DetailsPokemon', { id })
   }
 

@@ -3,10 +3,10 @@ import {
   View, Text, Image, StyleSheet, TouchableOpacity,
 } from 'react-native'
 import type { IPokemonCard } from '../interfaces'
-import { TypesPokemons } from '../utils'
+import { TypesPokemons, formatPokemonID } from '../utils'
 
 interface PokemonCardProps extends IPokemonCard {
-  handlePress(id: string): void;
+  handlePress(id: number): void;
 }
 
 export default function PokemonCard({
@@ -18,7 +18,7 @@ export default function PokemonCard({
         style={[styles.container, { backgroundColor: TypesPokemons[types[0]].color }]}
       >
         <View style={styles.containerId}>
-          <Text style={styles.id}>{id.toString().padStart(3, '0')}</Text>
+          <Text style={styles.id}>{formatPokemonID(id)}</Text>
         </View>
         <View style={styles.containerImage}>
           <Image
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   id: {
-    fontSize: 13,
-    color: '#656a81',
+    fontSize: 12,
+    color: '#6a6d80',
     fontWeight: '500',
   },
   containerImage: {
