@@ -1,3 +1,11 @@
 import PokemonCard from './PokemonCard'
+import DetailsPokemonHeader from './DetailsPokemonHeader'
+import DetailsPokemonNavbar from './DetailsPokemonNavbar'
+import DetailsPokemonAbout from './DetailsPokemonAbout'
 
-export default PokemonCard
+export {
+  PokemonCard,
+  DetailsPokemonHeader,
+  DetailsPokemonNavbar,
+  DetailsPokemonAbout,
+}

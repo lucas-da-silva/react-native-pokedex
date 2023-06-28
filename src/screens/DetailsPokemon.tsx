@@ -6,15 +6,23 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IPokemonDetailsCard, IScreens } from '../interfaces'
 import { TypesPokemons, fetchPokemonById } from '../utils'
-import DetailsPokemonHeader from '../components/DetailsPokemonHeader'
+import {
+  DetailsPokemonHeader,
+  DetailsPokemonNavbar,
+  DetailsPokemonAbout,
+} from '../components'
 
 type DetailsPokemonsProps = {
   navigation: NativeStackNavigationProp<IScreens, 'DetailsPokemon'>,
   route: RouteProp<IScreens, 'DetailsPokemon'>;
 }
 
-export default function DetailsPokemons({ route, navigation } : DetailsPokemonsProps) {
+export default function DetailsPokemons({ route, navigation }: DetailsPokemonsProps) {
   const [pokemon, setPokemon] = useState<IPokemonDetailsCard | null>(null)
+  const [
+    pokemonInformation,
+    setPokemonInformation,
+  ] = useState<React.ReactNode>(() => <DetailsPokemonAbout />)
 
   useEffect(() => {
     async function fetchData() {
@@ -25,8 +33,11 @@ export default function DetailsPokemons({ route, navigation } : DetailsPokemonsP
   }, [])
 
   const handleBackButton = (): void => {
-    console.log('BACK FUNCTION')
     navigation.navigate('Home')
+  }
+
+  const handlePokemonInformation = (component: React.ComponentType<object>): void => {
+    setPokemonInformation(() => React.createElement(component))
   }
 
   return (
@@ -47,6 +58,12 @@ export default function DetailsPokemons({ route, navigation } : DetailsPokemonsP
               >
                 <Image source={{ uri: pokemon.uri }} style={styles.image} />
               </View>
+              <View>
+                <DetailsPokemonNavbar
+                  handlePokemonInformation={handlePokemonInformation}
+                />
+                {pokemonInformation}
+              </View>
             </View>
           </View>
         )
@@ -64,14 +81,14 @@ const styles = StyleSheet.create({
   containerImage: {
     marginTop: 30,
     width: '100%',
-    height: 250,
+    height: 225,
     marginLeft: 'auto',
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
-    width: 220,
-    height: 220,
+    width: 210,
+    height: 210,
   },
 })

@@ -5,7 +5,7 @@ import {
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { fetchPokemons } from '../utils'
 import type { IPokemonCard, IScreens } from '../interfaces'
-import PokemonCard from '../components'
+import { PokemonCard } from '../components'
 
 type HomeProps = {
   navigation: NativeStackNavigationProp<IScreens, 'Home'>
