@@ -1,17 +1,19 @@
 import type { RouteProp } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import {
-  Text, View, StyleSheet, StatusBar,
+  View, StyleSheet, StatusBar, Image,
 } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IPokemonDetailsCard, IScreens } from '../interfaces'
-import { fetchPokemonById, formatPokemonID } from '../utils'
+import { TypesPokemons, fetchPokemonById } from '../utils'
+import DetailsPokemonHeader from '../components/DetailsPokemonHeader'
 
 type DetailsPokemonsProps = {
+  navigation: NativeStackNavigationProp<IScreens, 'DetailsPokemon'>,
   route: RouteProp<IScreens, 'DetailsPokemon'>;
 }
 
-export default function DetailsPokemons({ route } : DetailsPokemonsProps) {
+export default function DetailsPokemons({ route, navigation } : DetailsPokemonsProps) {
   const [pokemon, setPokemon] = useState<IPokemonDetailsCard | null>(null)
 
   useEffect(() => {
@@ -22,16 +24,29 @@ export default function DetailsPokemons({ route } : DetailsPokemonsProps) {
     fetchData()
   }, [])
 
+  const handleBackButton = (): void => {
+    console.log('BACK FUNCTION')
+    navigation.navigate('Home')
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
       {
         pokemon && (
-          <View style={styles.containerHeader}>
-            <Ionicons name="arrow-back" style={styles.arrowLeft} />
-            <View style={styles.containerTitle}>
-              <Text style={styles.name}>{pokemon.name}</Text>
-              <Text style={styles.id}>{formatPokemonID(pokemon.id)}</Text>
+          <View>
+            <DetailsPokemonHeader
+              id={pokemon.id}
+              name={pokemon.name}
+              handleBackButton={handleBackButton}
+            />
+            <View>
+              <View style={[
+                styles.containerImage,
+                { backgroundColor: TypesPokemons[pokemon.types[0]].color }]}
+              >
+                <Image source={{ uri: pokemon.uri }} style={styles.image} />
+              </View>
             </View>
           </View>
         )
@@ -43,31 +58,20 @@ export default function DetailsPokemons({ route } : DetailsPokemonsProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 30,
     backgroundColor: '#f5fbfb',
   },
-  containerHeader: {
-    flexDirection: 'row',
-    marginTop: 40,
-  },
-  arrowLeft: {
-    fontSize: 26,
-    color: '#5e616f',
-    position: 'relative',
-  },
-  containerTitle: {
-    position: 'absolute',
+  containerImage: {
+    marginTop: 30,
     width: '100%',
-    alignItems: 'center',
-    marginRight: 'auto',
+    height: 250,
     marginLeft: 'auto',
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  name: {
-    fontSize: 23,
-    fontWeight: 'bold',
-    color: '#2c304f',
-  },
-  id: {
-    color: '#6a6e7a',
+  image: {
+    width: 220,
+    height: 220,
   },
 })

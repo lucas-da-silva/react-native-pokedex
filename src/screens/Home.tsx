@@ -32,7 +32,7 @@ export default function Home({ navigation }: HomeProps) {
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Pokédex</Text>
         <Text style={styles.subtitle}>
-          Pesquise um Pokémon pelo nome ou usando seu número National Pokédex.
+          Search for a Pokémon by name or using its National Pokédex number.
         </Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5fbfb',
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 28,
   },
   containerTitle: {
     marginBottom: 20,
-    marginTop: 20,
+    marginTop: 30,
   },
   title: {
     fontSize: 32,

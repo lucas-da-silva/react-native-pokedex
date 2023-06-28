@@ -13,7 +13,10 @@ export default function PokemonCard({
   name, id, uri, types, handlePress,
 }: PokemonCardProps) {
   return (
-    <TouchableOpacity onPress={() => handlePress(id)}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={() => handlePress(id)}
+    >
       <View
         style={[styles.container, { backgroundColor: TypesPokemons[types[0]].color }]}
       >
@@ -63,12 +66,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   containerImage: {
-    marginTop: 7,
-    marginBottom: 14,
+    marginTop: 6,
+    marginBottom: 7,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
   },
   name: {
     color: '#2d2f58',
