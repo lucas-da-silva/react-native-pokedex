@@ -1,4 +1,6 @@
-import type { IPokemonCard, IPokemonDetails, IPokemonDetailsCard } from '../interfaces'
+import type {
+  IPokemonCard, IPokemonDetails, IPokemonDetailsCard, IPokemonSpecie,
+} from '../interfaces'
 import { formatPokemonCard, formatPokemonDetailsCard } from './formatPokemon'
 
 const URL = 'https://pokeapi.co/api/v2/pokemon'
@@ -9,10 +11,17 @@ type ResponsePokemon = {
   }[]
 }
 
+async function fetchPokemonSpecie(id: number) {
+  const response = await fetch(`${URL}-species/${id}`)
+  const json = await response.json() as IPokemonSpecie
+  return json
+}
+
 async function fetchPokemonsDetails(url: string): Promise<IPokemonCard> {
   const response = await fetch(url)
   const json = await response.json() as IPokemonDetails
-  return formatPokemonCard(json)
+  const pokemonSpecie = await fetchPokemonSpecie(json.id)
+  return formatPokemonCard({ ...json, ...pokemonSpecie })
 }
 
 export async function fetchPokemons(limit = 100, offset = 0): Promise<IPokemonCard[]> {
@@ -28,5 +37,6 @@ export async function fetchPokemons(limit = 100, offset = 0): Promise<IPokemonCa
 export async function fetchPokemonById(id: number): Promise<IPokemonDetailsCard> {
   const response = await fetch(`${URL}/${id}`)
   const json = await response.json() as IPokemonDetails
-  return formatPokemonDetailsCard(json)
+  const pokemonSpecie = await fetchPokemonSpecie(json.id)
+  return formatPokemonDetailsCard({ ...json, ...pokemonSpecie })
 }

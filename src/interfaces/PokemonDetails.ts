@@ -1,5 +1,7 @@
 import type { ITypesPokemons } from '../utils'
 import { IPokemon, IPokemonCard } from './Pokemon'
+import { IPokemonSpecie } from './PokemonSpecie'
+import 'react-native'
 
 export interface IPokemonDetails extends IPokemon {
   sprites: {
@@ -26,5 +28,11 @@ export interface IPokemonDetails extends IPokemon {
 export interface IPokemonDetailsCard extends IPokemonCard {
   abilities: string[]
   weight: number,
-  height: number
+  height: number,
+  description: {
+    text: string,
+    version: string
+  }
 }
+
+export interface IPokemonDetailsSpecie extends IPokemonDetails, IPokemonSpecie {}

@@ -8,4 +8,5 @@ export interface IPokemon {
 export interface IPokemonCard extends IPokemon {
   uri: string,
   types: ITypesPokemons[]
+  color: string
 }
