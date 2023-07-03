@@ -15,10 +15,16 @@ export interface IPokemonDetails extends IPokemon {
     }
   }[],
   abilities: {
-    name: string
-  }[]
+    ability: {
+      name: string
+    }
+  }[],
+  weight: number,
+  height: number
 }
 
 export interface IPokemonDetailsCard extends IPokemonCard {
   abilities: string[]
+  weight: number,
+  height: number
 }
