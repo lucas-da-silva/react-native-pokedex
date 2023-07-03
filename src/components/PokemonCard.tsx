@@ -10,7 +10,7 @@ interface PokemonCardProps extends IPokemonCard {
 }
 
 export default function PokemonCard({
-  name, id, uri, types, handlePress,
+  name, id, uri, types, handlePress, color,
 }: PokemonCardProps) {
   return (
     <TouchableOpacity

@@ -39,7 +39,7 @@ export default function Home({ navigation }: HomeProps) {
         <View style={styles.containerPokemons}>
           {pokemons
         && pokemons.map(({
-          name, id, uri, types,
+          name, id, uri, types, color,
         }) => (
           <PokemonCard
             name={name}
@@ -47,6 +47,7 @@ export default function Home({ navigation }: HomeProps) {
             id={id}
             uri={uri}
             types={types}
+            color={color}
             handlePress={handleDetailsPokemon}
           />
         ))}
