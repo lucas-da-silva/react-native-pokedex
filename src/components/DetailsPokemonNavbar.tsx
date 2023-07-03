@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View, Text, StyleSheet, TouchableOpacity,
 } from 'react-native'
@@ -6,9 +6,10 @@ import DetailsPokemonAbout from './DetailsPokemonAbout'
 import DetailsPokemonBaseStats from './DetailsPokemonBaseStats'
 import DetailsPokemonEvolution from './DetailsPokemonEvolution'
 import DetailsPokemonMoves from './DetailsPokemonMoves'
+import { IDetailsPokemonInfo } from '../interfaces'
 
 type DetailsPokemonNavbarProps = {
-  handlePokemonInformation(component: React.ComponentType): void;
+  handlePokemonInformation(component: React.ComponentType<IDetailsPokemonInfo>): void;
 };
 
 const pokemonInformation = [
@@ -30,12 +31,24 @@ const pokemonInformation = [
   },
 ]
 
+const firstInformation = pokemonInformation[0]
+
 export default function DetailsPokemonNavbar({
   handlePokemonInformation,
 }: DetailsPokemonNavbarProps) {
-  const [informationDisplay, setInformationDisplay] = useState<string>('About')
+  const [
+    informationDisplay,
+    setInformationDisplay,
+  ] = useState<string>(firstInformation.name)
 
-  const handleInformation = (name: string, component: React.ComponentType): void => {
+  useEffect(() => {
+    handleInformation(firstInformation.name, firstInformation.component)
+  }, [])
+
+  const handleInformation = (
+    name: string,
+    component: React.ComponentType<IDetailsPokemonInfo>,
+  ): void => {
     handlePokemonInformation(component)
     setInformationDisplay(name)
   }
@@ -66,14 +79,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   textNavbar: {
-    color: '#2c304f',
     fontWeight: 'bold',
     fontSize: 15,
+    color: '#91969c',
   },
   informationDisplay: {
+    color: '#2c304f',
     borderBottomWidth: 2,
     borderBottomColor: '#2c304f',
     paddingBottom: 10,

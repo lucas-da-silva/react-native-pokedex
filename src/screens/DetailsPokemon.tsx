@@ -1,16 +1,12 @@
 import type { RouteProp } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import {
-  View, StyleSheet, StatusBar, Image,
+  View, StyleSheet, StatusBar, Image, ScrollView,
 } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import type { IPokemonDetailsCard, IScreens } from '../interfaces'
+import type { IDetailsPokemonInfo, IPokemonDetailsCard, IScreens } from '../interfaces'
 import { TypesPokemons, fetchPokemonById } from '../utils'
-import {
-  DetailsPokemonHeader,
-  DetailsPokemonNavbar,
-  DetailsPokemonAbout,
-} from '../components'
+import { DetailsPokemonHeader, DetailsPokemonNavbar } from '../components'
 
 type DetailsPokemonsProps = {
   navigation: NativeStackNavigationProp<IScreens, 'DetailsPokemon'>,
@@ -19,10 +15,7 @@ type DetailsPokemonsProps = {
 
 export default function DetailsPokemons({ route, navigation }: DetailsPokemonsProps) {
   const [pokemon, setPokemon] = useState<IPokemonDetailsCard | null>(null)
-  const [
-    pokemonInformation,
-    setPokemonInformation,
-  ] = useState<React.ReactNode>(() => <DetailsPokemonAbout />)
+  const [pokemonInformation, setPokemonInformation] = useState<React.ReactNode>()
 
   useEffect(() => {
     async function fetchData() {
@@ -36,8 +29,13 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
     navigation.navigate('Home')
   }
 
-  const handlePokemonInformation = (component: React.ComponentType<object>): void => {
-    setPokemonInformation(() => React.createElement(component))
+  const handlePokemonInformation = (
+    component: React.ComponentType<IDetailsPokemonInfo>,
+  ): void => {
+    setPokemonInformation(() => React.createElement(
+      component,
+      { pokemon } as { pokemon: IPokemonDetailsCard },
+    ))
   }
 
   return (
@@ -58,11 +56,13 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
               >
                 <Image source={{ uri: pokemon.uri }} style={styles.image} />
               </View>
-              <View>
+              <View style={styles.containerContent}>
                 <DetailsPokemonNavbar
                   handlePokemonInformation={handlePokemonInformation}
                 />
-                {pokemonInformation}
+                <ScrollView>
+                  {pokemonInformation}
+                </ScrollView>
               </View>
             </View>
           </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5fbfb',
   },
   containerImage: {
-    marginTop: 30,
+    marginTop: 20,
     width: '100%',
     height: 225,
     marginLeft: 'auto',
@@ -90,5 +90,8 @@ const styles = StyleSheet.create({
   image: {
     width: 210,
     height: 210,
+  },
+  containerContent: {
+    marginTop: 5,
   },
 })
