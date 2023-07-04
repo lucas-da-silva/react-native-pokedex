@@ -18,7 +18,7 @@ export default function PokemonCard({
       onPress={() => handlePress(id)}
     >
       <View
-        style={[styles.container, { backgroundColor: TypesPokemons[types[0]].color }]}
+        style={[styles.container, { backgroundColor: TypesPokemons[color].color }]}
       >
         <View style={styles.containerId}>
           <Text style={styles.id}>{formatPokemonID(id)}</Text>

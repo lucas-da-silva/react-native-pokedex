@@ -9,6 +9,11 @@ const capitalizeFirstLetter = (
   field: { name: string },
 ): string => field.name.charAt(0).toUpperCase() + field.name.slice(1)
 
+const cleanDescriptionText = (text: string) => text.replace(/[\r\n]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .replace(/POKéMON/ig, 'Pokémon')
+  .trim()
+
 export const formatPokemonCard = (
   pokemon: IPokemonDetailsSpecie,
 ): IPokemonCard => ({
@@ -16,7 +21,7 @@ export const formatPokemonCard = (
   name: capitalizeFirstLetter(pokemon),
   uri: pokemon.sprites.other['official-artwork'].front_default,
   types: pokemon.types.map(({ type }) => type.name),
-  color: pokemon.color.name,
+  color: pokemon.types[0].type.name,
 })
 
 export const formatPokemonDetailsCard = (
@@ -31,10 +36,8 @@ export const formatPokemonDetailsCard = (
     abilities: pokemon.abilities.map(({ ability }) => capitalizeFirstLetter(ability)),
     weight: pokemon.weight / 10,
     height: pokemon.height,
-    description: {
-      text: description.flavor_text,
-      version: description.version.name,
-    },
+    description: cleanDescriptionText(description.flavor_text),
+    habitat: capitalizeFirstLetter(pokemon.habitat),
   }
 }
 

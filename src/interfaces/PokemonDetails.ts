@@ -29,10 +29,8 @@ export interface IPokemonDetailsCard extends IPokemonCard {
   abilities: string[]
   weight: number,
   height: number,
-  description: {
-    text: string,
-    version: string
-  }
+  description: string
+  habitat: string
 }
 
 export interface IPokemonDetailsSpecie extends IPokemonDetails, IPokemonSpecie {}

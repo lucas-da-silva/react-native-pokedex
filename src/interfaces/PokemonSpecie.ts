@@ -13,4 +13,7 @@ export interface IPokemonSpecie {
     name: string
   },
   flavor_text_entries: IPokemonSpecieFlavorText[]
+  habitat: {
+    name: string
+  }
 }

@@ -1,7 +1,7 @@
 import type { RouteProp } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import {
-  View, StyleSheet, StatusBar, Image, ScrollView,
+  View, StyleSheet, StatusBar, Image,
 } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IDetailsPokemonInfo, IPokemonDetailsCard, IScreens } from '../interfaces'
@@ -60,9 +60,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
                 <DetailsPokemonNavbar
                   handlePokemonInformation={handlePokemonInformation}
                 />
-                <ScrollView>
-                  {pokemonInformation}
-                </ScrollView>
+                {pokemonInformation}
               </View>
             </View>
           </View>
