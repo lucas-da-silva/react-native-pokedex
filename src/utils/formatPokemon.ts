@@ -27,9 +27,11 @@ export const formatPokemonCard = (
 export const formatPokemonDetailsCard = (
   pokemon: IPokemonDetailsSpecie,
 ): IPokemonDetailsCard => {
-  const description = pokemon.flavor_text_entries.find(
+  const descriptions = pokemon.flavor_text_entries.filter(
     ({ language }) => language.name === 'en',
-  ) as IPokemonSpecieFlavorText
+  ) as IPokemonSpecieFlavorText[]
+  const randomIndex = Math.floor(Math.random() * descriptions.length)
+  const description = descriptions[randomIndex]
 
   return {
     ...formatPokemonCard(pokemon),
@@ -38,6 +40,7 @@ export const formatPokemonDetailsCard = (
     height: pokemon.height,
     description: cleanDescriptionText(description.flavor_text),
     habitat: capitalizeFirstLetter(pokemon.habitat),
+    version: capitalizeFirstLetter(description.version),
   }
 }
 

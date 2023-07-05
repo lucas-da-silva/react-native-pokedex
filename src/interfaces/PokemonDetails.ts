@@ -22,7 +22,7 @@ export interface IPokemonDetails extends IPokemon {
     }
   }[],
   weight: number,
-  height: number
+  height: number,
 }
 
 export interface IPokemonDetailsCard extends IPokemonCard {
@@ -30,6 +30,7 @@ export interface IPokemonDetailsCard extends IPokemonCard {
   weight: number,
   height: number,
   description: string
+  version: string
   habitat: string
 }
 

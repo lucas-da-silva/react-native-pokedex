@@ -5,14 +5,17 @@ import { heightToFeetAndInches, weightToLibra } from '../utils'
 
 export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
   const {
-    abilities, weight, height, description, habitat,
+    abilities, weight, height, description, habitat, version,
   } = pokemon
 
   return (
     <View>
-      <Text style={styles.description}>
-        {description}
-      </Text>
+      <View style={styles.descriptionContainer}>
+        <Text style={styles.description}>
+          {description}
+        </Text>
+        <Text style={styles.version}>{`from Pokemon ${version}`}</Text>
+      </View>
 
       <View style={styles.row}>
         <Text style={styles.field}>Height</Text>
@@ -39,15 +42,23 @@ export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
         <Text style={styles.field}>Abilities</Text>
         <Text style={styles.value}>{abilities.join(', ')}</Text>
       </View>
-
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  descriptionContainer: {
+    marginBottom: 3,
+  },
+
   description: {
     color: '#2c304f',
-    marginBottom: 10,
+  },
+
+  version: {
+    textAlign: 'right',
+    fontSize: 12,
+    color: '#6e7278',
   },
 
   row: {
