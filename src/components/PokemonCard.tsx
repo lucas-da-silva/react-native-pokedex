@@ -52,43 +52,51 @@ const styles = StyleSheet.create({
     marginHorizontal: 7.5,
     borderRadius: 15,
     width: 150,
-    height: 210,
+    height: 215,
     alignItems: 'center',
   },
+
   containerId: {
     alignSelf: 'flex-end',
-    marginRight: 7,
-    marginTop: 2,
+    marginRight: 9,
+    marginTop: 4,
   },
+
   id: {
     fontSize: 12,
     color: '#6a6d80',
     fontWeight: '500',
   },
+
   containerImage: {
     marginTop: 6,
     marginBottom: 7,
   },
+
   image: {
     width: 120,
     height: 120,
   },
+
   name: {
     color: '#2d2f58',
     fontWeight: 'bold',
     marginBottom: 2,
     fontSize: 17,
   },
+
   containerTypes: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 2,
   },
+
   containerType: {
     width: 70,
     alignItems: 'center',
     height: 30,
   },
+
   type: {
     fontSize: 13,
     color: '#2d2f58',

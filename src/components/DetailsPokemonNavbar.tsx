@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
-    marginBottom: 15,
+    marginBottom: 17,
   },
   textNavbar: {
     fontWeight: 'bold',
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     color: '#2c304f',
     borderBottomWidth: 2,
     borderBottomColor: '#2c304f',
-    paddingBottom: 10,
+    paddingBottom: 13,
   },
 })

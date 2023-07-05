@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   backButton: {
-    fontSize: 28,
+    fontSize: 27,
     color: '#5e616f',
   },
   containerTitle: {
@@ -54,13 +54,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#2c304f',
   },
   id: {
     color: '#6a6e7a',
     fontSize: 16,
-    fontWeight: 'bold',
   },
 })

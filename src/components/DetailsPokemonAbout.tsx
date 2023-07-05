@@ -48,7 +48,7 @@ export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
 
 const styles = StyleSheet.create({
   descriptionContainer: {
-    marginBottom: 3,
+    marginBottom: 5,
   },
 
   description: {

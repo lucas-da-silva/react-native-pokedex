@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     height: 210,
   },
   containerContent: {
-    marginTop: 5,
+    marginTop: 10,
   },
 })
