@@ -1,19 +1,22 @@
 export interface IPokemonSpecieFlavorText {
   flavor_text: string,
   language: {
-    name: string
+    name: string,
   },
   version: {
-    name: string
-  }
+    name: string,
+  },
 }
 
 export interface IPokemonSpecie {
   color: {
-    name: string
+    name: string,
   },
-  flavor_text_entries: IPokemonSpecieFlavorText[]
+  evolution_chain: {
+    url: string
+  },
+  flavor_text_entries: IPokemonSpecieFlavorText[],
   habitat: {
-    name: string
-  }
+    name: string,
+  },
 }
