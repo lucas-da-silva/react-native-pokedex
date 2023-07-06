@@ -2,11 +2,15 @@ import { IPokemonCard } from './Pokemon'
 import {
   IPokemonDetails,
   IPokemonDetailsCard,
-  IPokemonDetailsSpecie,
+  IPokemonFormattedStats,
+  IPokemonStats,
+  IPokemonCompleteDetails,
+  IPokemonDetailsEvolution,
 } from './PokemonDetails'
 import IScreens from './Screens'
 import IDetailsPokemonInfo from './DetailsPokemon'
 import { IPokemonSpecie, IPokemonSpecieFlavorText } from './PokemonSpecie'
+import { IEvolutionChain, IEvolution } from './PokemonEvolution'
 
 export {
   IPokemonCard,
@@ -15,6 +19,11 @@ export {
   IPokemonDetailsCard,
   IDetailsPokemonInfo,
   IPokemonSpecie,
-  IPokemonDetailsSpecie,
   IPokemonSpecieFlavorText,
+  IEvolutionChain,
+  IPokemonFormattedStats,
+  IPokemonStats,
+  IPokemonCompleteDetails,
+  IEvolution,
+  IPokemonDetailsEvolution,
 }

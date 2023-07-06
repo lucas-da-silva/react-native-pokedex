@@ -1,7 +1,24 @@
 import type { ITypesPokemons } from '../utils'
+import { IEvolutionChain } from './PokemonEvolution'
 import { IPokemon, IPokemonCard } from './Pokemon'
 import { IPokemonSpecie } from './PokemonSpecie'
-import 'react-native'
+
+export interface IPokemonStats {
+  base_stat: number,
+  stat: {
+    name: 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defensef' | 'speed',
+  },
+}
+
+export interface IPokemonFormattedStats {
+  hp: number,
+  attack: number,
+  defense: number,
+  specialAttack: number,
+  specialDefense: number,
+  speed: number,
+  total: number,
+}
 
 export interface IPokemonDetails extends IPokemon {
   sprites: {
@@ -23,12 +40,20 @@ export interface IPokemonDetails extends IPokemon {
   }[],
   weight: number,
   height: number,
-  stats: {
-    base_stat: number,
-    stat: {
-      name: 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defensef' | 'speed',
-    },
-  }[],
+  stats: IPokemonStats[],
+  species: {
+    url: string
+  }
+}
+
+export interface IPokemonDetailsEvolution {
+  id: number,
+  name: string,
+  image: string,
+  trigger?: string,
+  types: ITypesPokemons[],
+  evolutions: IPokemonDetailsEvolution[]
+  minLevel: number
 }
 
 export interface IPokemonDetailsCard extends IPokemonCard {
@@ -38,15 +63,9 @@ export interface IPokemonDetailsCard extends IPokemonCard {
   description: string,
   version: string,
   habitat: string,
-  stats: {
-    hp: number,
-    attack: number,
-    defense: number,
-    specialAttack: number,
-    specialDefense: number,
-    speed: number,
-    total: number
-  },
+  stats: IPokemonFormattedStats,
+  evolution: IPokemonDetailsEvolution
 }
 
-export interface IPokemonDetailsSpecie extends IPokemonDetails, IPokemonSpecie {}
+export interface IPokemonCompleteDetails extends
+  IPokemonDetails, IPokemonSpecie, IEvolutionChain {}
