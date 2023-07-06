@@ -1,7 +1,7 @@
 import type { RouteProp } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import {
-  View, StyleSheet, StatusBar, Image,
+  View, StyleSheet, StatusBar, Image, ScrollView,
 } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IDetailsPokemonInfo, IPokemonDetailsCard, IScreens } from '../interfaces'
@@ -39,7 +39,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
       {
         pokemon && (
@@ -66,13 +66,12 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
           </View>
         )
       }
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 30,
     backgroundColor: '#f5fbfb',
   },

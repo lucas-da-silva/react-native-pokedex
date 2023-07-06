@@ -49,7 +49,6 @@ export default function DetailsPokemonBaseStats(
       {renderStat('Sp. Atk', specialAttack)}
       {renderStat('Sp. Def', specialDefense)}
       {renderStat('Speed', speed)}
-
       <View style={styles.row}>
         <Text style={[styles.field, { fontWeight: 'bold' }]}>Total</Text>
         <Text style={[styles.value, { fontWeight: 'bold' }]}>{total}</Text>
@@ -63,20 +62,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 5,
   },
-
   field: {
     color: '#6e7278',
     marginRight: 30,
     width: 60,
   },
-
   value: {
     color: '#2c304f',
     marginRight: 25,
     textAlign: 'right',
     width: 28,
   },
-
   bar: {
     flex: 1,
     alignSelf: 'center',
@@ -84,20 +80,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 3,
   },
-
   statBar: {
     height: 3,
     borderRadius: 10,
   },
-
   lowStat: {
     backgroundColor: 'red',
   },
-
   averageStat: {
     backgroundColor: 'yellow',
   },
-
   highStat: {
     backgroundColor: 'green',
   },
