@@ -1,14 +1,14 @@
 import { TypesPokemons, ITypesPokemons } from './TypesPokemons'
-import { fetchPokemons, fetchPokemonById } from './fetchPokemons'
-import { formatPokemonID } from './formatPokemon'
+import { fetchPokemons, fetchCompletePokemon } from './fetchPokemons'
+import PokemonFactory from './PokemonFactory'
 import { weightToLibra, heightToFeetAndInches } from './convertNumbers'
 
 export {
   TypesPokemons,
   fetchPokemons,
   ITypesPokemons,
-  fetchPokemonById,
-  formatPokemonID,
+  PokemonFactory,
   weightToLibra,
   heightToFeetAndInches,
+  fetchCompletePokemon,
 }
