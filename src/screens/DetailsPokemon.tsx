@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IDetailsPokemonInfo, IPokemonDetailsCard, IScreens } from '../interfaces'
-import { TypesPokemons, fetchPokemonById } from '../utils'
+import { TypesPokemons, fetchCompletePokemon } from '../utils'
 import { DetailsPokemonHeader, DetailsPokemonNavbar } from '../components'
 
 type DetailsPokemonsProps = {
@@ -19,7 +19,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedPokemon = await fetchPokemonById(route.params.id)
+      const fetchedPokemon = await fetchCompletePokemon(route.params.id)
       setPokemon(fetchedPokemon)
     }
     fetchData()
@@ -28,6 +28,10 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
   const handleBackButton = (): void => {
     navigation.navigate('Home')
   }
+
+  // const handleEvolution = (id): void => {
+
+  // }
 
   const handlePokemonInformation = (
     component: React.ComponentType<IDetailsPokemonInfo>,

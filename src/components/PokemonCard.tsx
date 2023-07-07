@@ -3,7 +3,7 @@ import {
   View, Text, Image, StyleSheet, TouchableOpacity,
 } from 'react-native'
 import type { IPokemonCard } from '../interfaces'
-import { TypesPokemons, formatPokemonID } from '../utils'
+import { TypesPokemons, PokemonFactory } from '../utils'
 
 interface PokemonCardProps extends IPokemonCard {
   handlePress(id: number): void;
@@ -21,7 +21,7 @@ export default function PokemonCard({
         style={[styles.container, { backgroundColor: TypesPokemons[color].color }]}
       >
         <View style={styles.containerId}>
-          <Text style={styles.id}>{formatPokemonID(id)}</Text>
+          <Text style={styles.id}>{PokemonFactory.PokemonID(id)}</Text>
         </View>
         <View style={styles.containerImage}>
           <Image
@@ -55,48 +55,40 @@ const styles = StyleSheet.create({
     height: 215,
     alignItems: 'center',
   },
-
   containerId: {
     alignSelf: 'flex-end',
     marginRight: 9,
     marginTop: 4,
   },
-
   id: {
     fontSize: 12,
     color: '#6a6d80',
     fontWeight: '500',
   },
-
   containerImage: {
     marginTop: 6,
     marginBottom: 7,
   },
-
   image: {
     width: 120,
     height: 120,
   },
-
   name: {
     color: '#2d2f58',
     fontWeight: 'bold',
     marginBottom: 2,
     fontSize: 17,
   },
-
   containerTypes: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 2,
   },
-
   containerType: {
     width: 70,
     alignItems: 'center',
     height: 30,
   },
-
   type: {
     fontSize: 13,
     color: '#2d2f58',

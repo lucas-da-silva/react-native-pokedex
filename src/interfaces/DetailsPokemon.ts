@@ -1,7 +1,7 @@
 import { IPokemonDetailsCard } from './PokemonDetails'
 
 interface IDetailsPokemonInfo {
-  pokemon: IPokemonDetailsCard
+  pokemon: IPokemonDetailsCard,
 }
 
 export default IDetailsPokemonInfo

@@ -3,7 +3,7 @@ import React from 'react'
 import {
   View, Text, TouchableOpacity, StyleSheet,
 } from 'react-native'
-import { formatPokemonID } from '../utils'
+import { PokemonFactory } from '../utils'
 
 type DetailsPokemonHeaderProps = {
   id: number
@@ -27,7 +27,7 @@ export default function DetailsPokemonHeader(
       </TouchableOpacity>
       <View style={styles.containerTitle}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.id}>{formatPokemonID(id)}</Text>
+        <Text style={styles.id}>{PokemonFactory.PokemonID(id)}</Text>
       </View>
     </View>
   )

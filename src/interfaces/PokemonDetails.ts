@@ -51,6 +51,7 @@ export interface IPokemonDetailsEvolution {
   name: string,
   image: string,
   trigger?: string,
+  color: ITypesPokemons,
   types: ITypesPokemons[],
   evolutions: IPokemonDetailsEvolution[]
   minLevel: number

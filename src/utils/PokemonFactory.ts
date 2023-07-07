@@ -56,15 +56,21 @@ class PokemonFactory {
     return pokemon.types.map(({ type }) => type.name)
   }
 
+  public PokemonID(id: number): string {
+    return id.toString().padStart(3, '0')
+  }
+
   public EvolutionCard(
     pokemon: IPokemonDetails,
     evolution: IEvolution,
   ): IPokemonDetailsEvolution {
+    const types = this.getTypes(pokemon)
     const formattedEvolution = {
       id: pokemon.id,
-      name: pokemon.name,
+      name: this.capitalizeFirstLetter(pokemon),
       image: this.getImage(pokemon),
-      types: this.getTypes(pokemon),
+      types,
+      color: types[0],
       evolutions: [],
       minLevel: 0,
       trigger: '',
@@ -108,10 +114,6 @@ class PokemonFactory {
       stats: this.getStats(pokemon.stats),
       evolution,
     }
-  }
-
-  public PokemonID(id: number): string {
-    return id.toString().padStart(3, '0')
   }
 }
 
