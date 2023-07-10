@@ -41,9 +41,7 @@ const styles = StyleSheet.create({
   containerBackButton: {
     height: 28,
     width: 28,
-    position: 'absolute',
     marginTop: 4,
-    zIndex: 1,
   },
   backButton: {
     fontSize: 27,
@@ -51,6 +49,8 @@ const styles = StyleSheet.create({
   },
   containerTitle: {
     width: '100%',
+    flex: 1,
+    marginRight: 28,
     alignItems: 'center',
   },
   name: {

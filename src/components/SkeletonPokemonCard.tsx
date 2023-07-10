@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   skeletonId: {
     alignSelf: 'flex-end',
     marginRight: 9,
+    borderRadius: 5,
     marginTop: 4,
     height: 16,
     width: 20,
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
   skeletonImage: {
     width: 120,
     height: 120,
+    borderRadius: 5,
     marginTop: 6,
     backgroundColor: '#c7c7c7',
   },

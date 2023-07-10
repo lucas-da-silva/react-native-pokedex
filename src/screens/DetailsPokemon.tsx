@@ -6,7 +6,11 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { IDetailsPokemonInfo, IPokemonDetailsCard, IScreens } from '../interfaces'
 import { TypesPokemons, fetchCompletePokemon } from '../utils'
-import { DetailsPokemonHeader, DetailsPokemonNavbar } from '../components'
+import {
+  DetailsPokemonHeader,
+  DetailsPokemonNavbar,
+  SkeletonDetailsPokemon,
+} from '../components'
 
 type DetailsPokemonsProps = {
   navigation: NativeStackNavigationProp<IScreens, 'DetailsPokemon'>,
@@ -15,6 +19,7 @@ type DetailsPokemonsProps = {
 
 export default function DetailsPokemons({ route, navigation }: DetailsPokemonsProps) {
   const [pokemon, setPokemon] = useState<IPokemonDetailsCard | null>(null)
+  const [loading, setLoading] = useState(true)
   const [pokemonInformation, setPokemonInformation] = useState<React.ReactNode>()
 
   useEffect(() => {
@@ -23,6 +28,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
       setPokemon(fetchedPokemon)
     }
     fetchData()
+    setLoading(false)
   }, [])
 
   const handleBackButton = (): void => {
@@ -43,17 +49,17 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
       {
-        pokemon && (
-          <View>
+        loading || !pokemon ? <SkeletonDetailsPokemon /> : (
+          <>
             <DetailsPokemonHeader
               id={pokemon.id}
               name={pokemon.name}
               handleBackButton={handleBackButton}
             />
-            <View>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={[
                 styles.containerImage,
                 { backgroundColor: TypesPokemons[pokemon.types[0]].color }]}
@@ -66,16 +72,17 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
                 />
                 {pokemonInformation}
               </View>
-            </View>
-          </View>
+            </ScrollView>
+          </>
         )
       }
-    </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 30,
     backgroundColor: '#f5fbfb',
   },

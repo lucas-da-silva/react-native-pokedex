@@ -10,14 +10,12 @@ export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
     abilities, weight, height, description, habitat, version,
   } = pokemon
 
-  function renderInfo(label: string, value: string) {
-    return (
-      <View style={styles.row}>
-        <Text style={styles.field}>{label}</Text>
-        <Text style={styles.value}>{value}</Text>
-      </View>
-    )
-  }
+  const renderInfo = (label: string, value: string) => (
+    <View style={styles.row}>
+      <Text style={styles.field}>{label}</Text>
+      <Text style={styles.value}>{value}</Text>
+    </View>
+  )
 
   return (
     <View>
