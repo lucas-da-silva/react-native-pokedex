@@ -5,7 +5,6 @@ import {
 import DetailsPokemonAbout from './DetailsPokemonAbout'
 import DetailsPokemonBaseStats from './DetailsPokemonBaseStats'
 import DetailsPokemonEvolution from './DetailsPokemonEvolution'
-import DetailsPokemonMoves from './DetailsPokemonMoves'
 import { IDetailsPokemonInfo } from '../interfaces'
 
 interface DetailsPokemonNavbarProps extends Pick<IDetailsPokemonInfo, 'handleEvolution'> {
@@ -24,10 +23,6 @@ const pokemonInformation = [
   {
     name: 'Evolution',
     component: DetailsPokemonEvolution,
-  },
-  {
-    name: 'Moves',
-    component: DetailsPokemonMoves,
   },
 ]
 
