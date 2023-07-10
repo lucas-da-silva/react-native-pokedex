@@ -25,6 +25,7 @@
     "rules": {
         "@typescript-eslint/no-use-before-define": "off",
         "class-methods-use-this": "off", 
+        "react/no-array-index-key": "off",
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
         "react/style-prop-object": "off",

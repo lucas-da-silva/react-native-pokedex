@@ -1,5 +1,5 @@
 import { TypesPokemons, ITypesPokemons } from './TypesPokemons'
-import { fetchPokemons, fetchCompletePokemon } from './fetchPokemons'
+import { fetchPokemons, fetchCompletePokemon, POKEMON_LIMIT } from './fetchPokemons'
 import PokemonFactory from './PokemonFactory'
 import { weightToLibra, heightToFeetAndInches } from './convertNumbers'
 
@@ -11,4 +11,5 @@ export {
   weightToLibra,
   heightToFeetAndInches,
   fetchCompletePokemon,
+  POKEMON_LIMIT,
 }

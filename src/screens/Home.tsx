@@ -3,9 +3,10 @@ import {
   ScrollView, StyleSheet, View, Text, StatusBar,
 } from 'react-native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { fetchPokemons } from '../utils'
+import { fetchPokemons, POKEMON_LIMIT } from '../utils'
 import type { IPokemonCard, IScreens } from '../interfaces'
 import { PokemonCard } from '../components'
+import SkeletonPokemonCard from '../components/SkeletonPokemonCard'
 
 type HomeProps = {
   navigation: NativeStackNavigationProp<IScreens, 'Home'>
@@ -13,6 +14,9 @@ type HomeProps = {
 
 export default function Home({ navigation }: HomeProps) {
   const [pokemons, setPokemons] = useState<[] | IPokemonCard[]>([])
+  const [loadingPokemons, setLoadingPokemons] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
     async function fetchData() {
@@ -20,7 +24,19 @@ export default function Home({ navigation }: HomeProps) {
       setPokemons(fetchedPokemons)
     }
     fetchData()
+    setLoadingPokemons(false)
   }, [])
+
+  const loadMorePokemons = async () => {
+    if (loading) return
+
+    setLoading(true)
+    const newOffset = offset + POKEMON_LIMIT
+    const newPokemons = await fetchPokemons(POKEMON_LIMIT, newOffset)
+    setPokemons([...pokemons, ...newPokemons])
+    setOffset(newOffset)
+    setLoading(false)
+  }
 
   const handleDetailsPokemon = (id: number): void => {
     navigation.navigate('DetailsPokemon', { id })
@@ -35,22 +51,33 @@ export default function Home({ navigation }: HomeProps) {
           Search for a Pokémon by name or using its National Pokédex number.
         </Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        onScroll={({ nativeEvent }) => {
+          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent
+          const isEndReached = layoutMeasurement.height + contentOffset.y
+          >= contentSize.height - 100
+          if (isEndReached) {
+            loadMorePokemons()
+          }
+        }}
+        scrollEventThrottle={16}
+      >
         <View style={styles.containerPokemons}>
-          {pokemons
-        && pokemons.map(({
-          name, id, uri, types, color,
-        }) => (
-          <PokemonCard
-            name={name}
-            key={id}
-            id={id}
-            uri={uri}
-            types={types}
-            color={color}
-            handlePress={handleDetailsPokemon}
-          />
-        ))}
+          {loadingPokemons ? <SkeletonPokemonCard /> : pokemons.map(({
+            name, id, uri, types, color,
+          }) => (
+            <PokemonCard
+              name={name}
+              key={id}
+              id={id}
+              uri={uri}
+              types={types}
+              color={color}
+              handlePress={handleDetailsPokemon}
+            />
+          ))}
+          {loading && <SkeletonPokemonCard />}
         </View>
       </ScrollView>
     </View>
@@ -67,7 +94,7 @@ const styles = StyleSheet.create({
   },
   containerTitle: {
     marginBottom: 20,
-    marginTop: 30,
+    marginTop: 20,
   },
   title: {
     fontSize: 32,

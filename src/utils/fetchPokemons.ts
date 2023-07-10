@@ -10,7 +10,7 @@ import type {
 import PokemonFactory from './PokemonFactory'
 
 const URL_BASE = 'https://pokeapi.co/api/v2/'
-const POKEMON_LIMIT = 20
+export const POKEMON_LIMIT = 20
 const POKEMON_URL = `${URL_BASE}/pokemon`
 const REGEX_URL_ID = /\/(\d+)\//
 
