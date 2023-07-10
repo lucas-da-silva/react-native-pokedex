@@ -36,7 +36,7 @@ export default function DetailsPokemonHeader(
 const styles = StyleSheet.create({
   containerHeader: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: 20,
   },
   containerBackButton: {
     height: 28,

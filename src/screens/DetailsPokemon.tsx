@@ -35,16 +35,20 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
     navigation.navigate('Home')
   }
 
-  // const handleEvolution = (id): void => {
-
-  // }
+  const handleEvolution = async (id: number): Promise<void> => {
+    if (id === route.params.id) return
+    setLoading(true)
+    const fetchedPokemon = await fetchCompletePokemon(id)
+    setPokemon(fetchedPokemon)
+    setLoading(false)
+  }
 
   const handlePokemonInformation = (
     component: React.ComponentType<IDetailsPokemonInfo>,
   ): void => {
     setPokemonInformation(() => React.createElement(
       component,
-      { pokemon } as { pokemon: IPokemonDetailsCard },
+      { pokemon, handleEvolution } as IDetailsPokemonInfo,
     ))
   }
 
@@ -69,6 +73,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
               <View style={styles.containerContent}>
                 <DetailsPokemonNavbar
                   handlePokemonInformation={handlePokemonInformation}
+                  handleEvolution={handleEvolution}
                 />
                 {pokemonInformation}
               </View>

@@ -8,9 +8,9 @@ import DetailsPokemonEvolution from './DetailsPokemonEvolution'
 import DetailsPokemonMoves from './DetailsPokemonMoves'
 import { IDetailsPokemonInfo } from '../interfaces'
 
-type DetailsPokemonNavbarProps = {
+interface DetailsPokemonNavbarProps extends Pick<IDetailsPokemonInfo, 'handleEvolution'> {
   handlePokemonInformation(component: React.ComponentType<IDetailsPokemonInfo>): void;
-};
+}
 
 const pokemonInformation = [
   {

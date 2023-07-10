@@ -7,7 +7,7 @@ import { IDetailsPokemonInfo, IPokemonDetailsEvolution } from '../interfaces'
 import { PokemonFactory, TypesPokemons } from '../utils'
 
 export default function DetailsPokemonEvolution(
-  { pokemon: { evolution } }: IDetailsPokemonInfo,
+  { pokemon: { evolution }, handleEvolution }: IDetailsPokemonInfo,
 ) {
   const renderPokemon = ({
     id, color, image, name, types, minLevel, trigger,
@@ -21,7 +21,7 @@ export default function DetailsPokemonEvolution(
       )}
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => console.log(id)}
+        onPress={() => handleEvolution(id)}
         key={id}
         style={[
           styles.pokemonCard,

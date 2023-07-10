@@ -47,7 +47,7 @@ export default function SkeletonDetailsPokemon() {
 
 const styles = StyleSheet.create({
   skeletonHeader: {
-    marginTop: 30,
+    marginTop: 20,
     flexDirection: 'row',
   },
   skeletonBackButton: {
