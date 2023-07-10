@@ -11,6 +11,10 @@ import {
 } from '../interfaces'
 import { ITypesPokemons } from './TypesPokemons'
 
+type TriggerMap = {
+  [key: string]: string;
+};
+
 class PokemonFactory {
   private capitalizeFirstLetter(field: { name: string }): string {
     return field.name.charAt(0).toUpperCase() + field.name.slice(1)
@@ -60,9 +64,29 @@ class PokemonFactory {
     return id.toString().padStart(3, '0')
   }
 
+  public getTrigger(trigger: string): string {
+    const triggers: TriggerMap = {
+      'level-up': 'Level',
+      trade: 'Trade',
+      'use-item': 'Use Item',
+      shed: 'Shed',
+      spin: 'spin',
+      'tower-of-darkness': 'Tower of Darkness',
+      'tower-of-waters': 'Tower of Waters',
+      'three-critical-hits': 'three-critical-hits',
+      'take-damage': 'take-damage',
+      other: 'Other',
+      'agile-style-move': 'agile-style-move',
+      'strong-style-move': 'strong-style-move',
+      'recoil-damage': 'recoil-damage',
+    }
+
+    return triggers[trigger]
+  }
+
   public EvolutionCard(
     pokemon: IPokemonDetails,
-    evolution: IEvolution,
+    { evolution_details: evolutionDetails }: IEvolution,
   ): IPokemonDetailsEvolution {
     const types = this.getTypes(pokemon)
     const formattedEvolution = {
@@ -76,9 +100,11 @@ class PokemonFactory {
       trigger: '',
     }
 
-    if (evolution.evolution_details[0]) {
-      formattedEvolution.trigger = evolution.evolution_details[0].trigger.name
-      formattedEvolution.minLevel = evolution.evolution_details[0].min_level
+    if (evolutionDetails[0]) {
+      formattedEvolution.trigger = this.getTrigger(
+        evolutionDetails[0].trigger.name,
+      )
+      formattedEvolution.minLevel = evolutionDetails[0].min_level
     }
 
     return formattedEvolution

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import {
   View, Text, StyleSheet, TouchableOpacity, Image,
 } from 'react-native'
@@ -9,23 +10,35 @@ export default function DetailsPokemonEvolution(
   { pokemon: { evolution } }: IDetailsPokemonInfo,
 ) {
   const renderPokemon = ({
-    id, color, image, name, types,
+    id, color, image, name, types, minLevel, trigger,
   }: IPokemonDetailsEvolution) => (
-    <TouchableOpacity
-      activeOpacity={0.6}
-      onPress={() => console.log(id)}
-      key={id}
-      style={[
-        styles.pokemonCard, { backgroundColor: TypesPokemons[color].color },
-      ]}
-    >
-      <Image source={{ uri: image }} style={styles.image} />
-      <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
-      <Text style={styles.name}>{name}</Text>
-      <View style={styles.typesContainer}>
-        {types.map((type) => <Text style={styles.type} key={type}>{type}</Text>)}
-      </View>
-    </TouchableOpacity>
+    <View style={styles.containerPokemon}>
+      {minLevel > 0 && (
+        <View style={styles.triggerContainer}>
+          <Ionicons name="md-arrow-forward-sharp" style={styles.arrowForward} />
+          <Text style={styles.trigger}>{`${trigger} ${minLevel}`}</Text>
+        </View>
+      )}
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => console.log(id)}
+        key={id}
+        style={[
+          styles.pokemonCard,
+          {
+            backgroundColor: TypesPokemons[color].color,
+            height: types.length > 1 ? 150 : 130,
+          },
+        ]}
+      >
+        <Image source={{ uri: image }} style={styles.image} />
+        <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
+        <Text style={styles.name}>{name}</Text>
+        <View style={styles.typesContainer}>
+          {types.map((type) => <Text style={styles.type} key={type}>{type}</Text>)}
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 
   const renderEvolutions = (evolutions: IPokemonDetailsEvolution[]) => (
@@ -39,9 +52,7 @@ export default function DetailsPokemonEvolution(
 
   return (
     <View style={styles.container}>
-      <View style={styles.evolutionContainer}>
-        {renderPokemon(evolution)}
-      </View>
+      {renderPokemon(evolution)}
       {evolution.evolutions.length > 0 && renderEvolutions(evolution.evolutions)}
     </View>
   )
@@ -50,17 +61,22 @@ export default function DetailsPokemonEvolution(
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-  },
-  evolutionContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 5,
+  },
+  containerPokemon: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  evolutionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   pokemonCard: {
     borderRadius: 15,
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     alignItems: 'center',
-    marginRight: 20,
   },
   image: {
     width: 60,
@@ -74,16 +90,27 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 12,
-    marginBottom: 5,
+    marginBottom: 3,
     color: '#2c304f',
     fontWeight: 'bold',
   },
   typesContainer: {
-    marginBottom: 10,
+    marginBottom: 7,
   },
   type: {
     fontSize: 12,
     color: '#2c304f',
-    marginBottom: 2,
+  },
+  triggerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  arrowForward: {
+    fontSize: 20,
+    color: '#6a6e7a',
+  },
+  trigger: {
+    fontSize: 12,
   },
 })

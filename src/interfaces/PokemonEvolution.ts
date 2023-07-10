@@ -1,5 +1,6 @@
 interface IEvolutionDetails {
   min_level: number,
+  min_happiness: number,
   trigger: {
     name: string,
   },
