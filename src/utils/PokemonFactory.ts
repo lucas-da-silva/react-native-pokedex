@@ -110,7 +110,9 @@ class PokemonFactory {
     return formattedEvolution
   }
 
-  public PokemonCard(pokemon: IPokemonDetails): IPokemonCard {
+  public PokemonCard(pokemon: IPokemonDetails | undefined): IPokemonCard | object {
+    if (!pokemon) return {}
+
     return {
       id: pokemon.id,
       name: this.capitalizeFirstLetter(pokemon),
@@ -128,7 +130,7 @@ class PokemonFactory {
     const description = this.getDescription(pokemonSpecie.flavor_text_entries)
 
     return {
-      ...this.PokemonCard(pokemon),
+      ...this.PokemonCard(pokemon) as IPokemonCard,
       abilities: pokemon.abilities.map(
         ({ ability }) => this.capitalizeFirstLetter(ability),
       ),

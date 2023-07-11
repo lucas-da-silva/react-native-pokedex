@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { debounce } from 'lodash'
 import {
   ScrollView, StyleSheet, View, Text, StatusBar,
 } from 'react-native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { fetchPokemons, POKEMON_LIMIT } from '../utils'
+import {
+  fetchPokemon, fetchPokemons, POKEMON_LIMIT, PokemonFactory,
+} from '../utils'
 import type { IPokemonCard, IScreens } from '../interfaces'
-import { PokemonCard } from '../components'
-import SkeletonPokemonCard from '../components/SkeletonPokemonCard'
+import { PokemonCard, PokemonSearchInput, SkeletonPokemonCard } from '../components'
 
 type HomeProps = {
-  navigation: NativeStackNavigationProp<IScreens, 'Home'>
+  navigation: NativeStackNavigationProp<IScreens, 'Home'>,
 }
+
+const SHORTEST_NAME_POKEMON = 5
 
 export default function Home({ navigation }: HomeProps) {
   const [pokemons, setPokemons] = useState<[] | IPokemonCard[]>([])
+  const [filteredPokemons, setFilteredPokemons] = useState<IPokemonCard[]>([])
+  const [searchPokemon, setSearchPokemon] = useState('')
   const [loadingPokemons, setLoadingPokemons] = useState(true)
   const [loading, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
@@ -22,25 +28,57 @@ export default function Home({ navigation }: HomeProps) {
     async function fetchData() {
       const fetchedPokemons = await fetchPokemons()
       setPokemons(fetchedPokemons)
+      setFilteredPokemons(fetchedPokemons)
     }
     fetchData()
     setLoadingPokemons(false)
   }, [])
 
+  const debouncedSearch = debounce(async () => {
+    if (!searchPokemon.trim()) {
+      return setFilteredPokemons(pokemons)
+    }
+
+    const filtered: [] | IPokemonCard[] = pokemons.filter(
+      ({ id, name }) => name.toLowerCase().includes(searchPokemon.toLowerCase())
+        || id === Number(searchPokemon),
+    )
+
+    if (!filtered.length && searchPokemon.length >= SHORTEST_NAME_POKEMON) {
+      const json = await fetchPokemon(searchPokemon)
+      if (json) {
+        const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard
+        return setFilteredPokemons([pokemon])
+      }
+    }
+
+    return setFilteredPokemons(filtered)
+  }, 500)
+
+  useEffect(() => {
+    debouncedSearch()
+
+    return () => {
+      debouncedSearch.cancel()
+    }
+  }, [searchPokemon])
+
   const loadMorePokemons = async () => {
-    if (loading) return
+    if (loading || filteredPokemons.length < POKEMON_LIMIT) return
 
     setLoading(true)
     const newOffset = offset + POKEMON_LIMIT
     const newPokemons = await fetchPokemons(POKEMON_LIMIT, newOffset)
+    const newFilteredPokemons = [...filteredPokemons, ...newPokemons]
     setPokemons([...pokemons, ...newPokemons])
+    setFilteredPokemons(newFilteredPokemons)
     setOffset(newOffset)
     setLoading(false)
   }
 
-  const handleDetailsPokemon = (id: number): void => {
+  const handleDetailsPokemon = useCallback((id: number) => {
     navigation.navigate('DetailsPokemon', { id })
-  }
+  }, [navigation])
 
   return (
     <View style={styles.container}>
@@ -51,6 +89,12 @@ export default function Home({ navigation }: HomeProps) {
           Search for a Pokémon by name or using its National Pokédex number.
         </Text>
       </View>
+      <PokemonSearchInput
+        searchPokemon={searchPokemon}
+        setSearchPokemon={setSearchPokemon}
+      />
+      {(pokemons.length > 0 && !filteredPokemons.length)
+        && <Text>Pokemon not found.</Text>}
       <ScrollView
         showsVerticalScrollIndicator={false}
         onScroll={({ nativeEvent }) => {
@@ -64,7 +108,7 @@ export default function Home({ navigation }: HomeProps) {
         scrollEventThrottle={16}
       >
         <View style={styles.containerPokemons}>
-          {loadingPokemons ? <SkeletonPokemonCard /> : pokemons.map(({
+          {loadingPokemons ? <SkeletonPokemonCard /> : filteredPokemons.map(({
             name, id, uri, types, color,
           }) => (
             <PokemonCard
@@ -93,8 +137,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
   },
   containerTitle: {
-    marginBottom: 20,
     marginTop: 20,
+    marginBottom: 18,
   },
   title: {
     fontSize: 32,

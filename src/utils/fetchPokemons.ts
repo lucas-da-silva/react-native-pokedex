@@ -20,10 +20,12 @@ type ResponsePokemon = {
   }[]
 }
 
-const fetchPokemonById = async (id: number): Promise<IPokemonDetails> => {
-  const response = await fetch(`${POKEMON_URL}/${id}`)
-  const pokemon = await response.json() as IPokemonDetails
-  return pokemon
+export const fetchPokemon = async (
+  pokemon: number | string,
+): Promise<IPokemonDetails | undefined> => {
+  const response = await fetch(`${POKEMON_URL}/${pokemon}`)
+  const json = await response.json() as IPokemonDetails
+  return json
 }
 
 const fetchPokemonSpecie = async (url: string): Promise<IPokemonSpecie> => {
@@ -37,7 +39,7 @@ const fetchEvolutionDetails = async (
   evolutionChain: IPokemonDetailsEvolution,
 ): Promise<void> => {
   const matches = evolution.species.url.match(REGEX_URL_ID) as RegExpMatchArray
-  const pokemon = await fetchPokemonById(Number(matches[1]))
+  const pokemon = await fetchPokemon(Number(matches[1])) as IPokemonDetails
   const formattedEvolution = PokemonFactory.EvolutionCard(pokemon, evolution)
 
   evolutionChain.evolutions.push(formattedEvolution)
@@ -55,7 +57,7 @@ const fetchEvolutionChain = async (url: string): Promise<IPokemonDetailsEvolutio
 
   const { chain } = json
   const matches = chain.species.url.match(REGEX_URL_ID) as RegExpMatchArray
-  const firstPokemon = await fetchPokemonById(Number(matches[1]))
+  const firstPokemon = await fetchPokemon(Number(matches[1])) as IPokemonDetails
 
   const evolutionChain = PokemonFactory.EvolutionCard(firstPokemon, chain)
 
@@ -71,7 +73,7 @@ const fetchEvolutionChain = async (url: string): Promise<IPokemonDetailsEvolutio
 const fetchPokemonsDetails = async (url: string): Promise<IPokemonCard> => {
   const response = await fetch(url)
   const pokemons = await response.json() as IPokemonDetails
-  return PokemonFactory.PokemonCard(pokemons)
+  return PokemonFactory.PokemonCard(pokemons) as IPokemonCard
 }
 
 export const fetchPokemons = async (
@@ -88,7 +90,7 @@ export const fetchPokemons = async (
 }
 
 export const fetchCompletePokemon = async (id: number): Promise<IPokemonDetailsCard> => {
-  const pokemon = await fetchPokemonById(id)
+  const pokemon = await fetchPokemon(id) as IPokemonDetails
   const pokemonSpecie = await fetchPokemonSpecie(pokemon.species.url)
   const evolutionChain = await fetchEvolutionChain(pokemonSpecie.evolution_chain.url)
   return PokemonFactory.PokemonDetailsCard(pokemon, pokemonSpecie, evolutionChain)
