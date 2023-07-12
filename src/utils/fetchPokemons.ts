@@ -58,7 +58,6 @@ const fetchEvolutionChain = async (url: string): Promise<IPokemonDetailsEvolutio
   const { chain } = json
   const matches = chain.species.url.match(REGEX_URL_ID) as RegExpMatchArray
   const firstPokemon = await fetchPokemon(Number(matches[1])) as IPokemonDetails
-
   const evolutionChain = PokemonFactory.EvolutionCard(firstPokemon, chain)
 
   if (chain.evolves_to.length > 0) {

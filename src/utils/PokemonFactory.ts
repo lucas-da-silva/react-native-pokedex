@@ -9,20 +9,14 @@ import {
   IPokemonDetailsEvolution,
   IPokemonSpecie,
 } from '../interfaces'
+import getEvolution from './evolutionMapping'
 import { ITypesPokemons } from './TypesPokemons'
-
-type TriggerMap = {
-  [key: string]: string;
-};
+import capitalizeFirstLetter from './formatString'
 
 class PokemonFactory {
-  private capitalizeFirstLetter(field: { name: string }): string {
-    return field.name.charAt(0).toUpperCase() + field.name.slice(1)
-  }
-
   private cleanDescription(text: string, namePokemon: string): string {
     const nameRegex = new RegExp(`\\b${namePokemon}\\b`, 'gi')
-    const capitalizedPokemonName = this.capitalizeFirstLetter({ name: namePokemon })
+    const capitalizedPokemonName = capitalizeFirstLetter({ name: namePokemon })
 
     return text
       .replace(/[\r\n]/g, ' ')
@@ -64,47 +58,27 @@ class PokemonFactory {
     return id.toString().padStart(3, '0')
   }
 
-  public getTrigger(trigger: string): string {
-    const triggers: TriggerMap = {
-      'level-up': 'Level',
-      trade: 'Trade',
-      'use-item': 'Use Item',
-      shed: 'Shed',
-      spin: 'spin',
-      'tower-of-darkness': 'Tower of Darkness',
-      'tower-of-waters': 'Tower of Waters',
-      'three-critical-hits': 'three-critical-hits',
-      'take-damage': 'take-damage',
-      other: 'Other',
-      'agile-style-move': 'agile-style-move',
-      'strong-style-move': 'strong-style-move',
-      'recoil-damage': 'recoil-damage',
-    }
-
-    return triggers[trigger]
-  }
-
   public EvolutionCard(
     pokemon: IPokemonDetails,
     { evolution_details: evolutionDetails }: IEvolution,
   ): IPokemonDetailsEvolution {
     const types = this.getTypes(pokemon)
-    const formattedEvolution = {
+
+    const formattedEvolution: IPokemonDetailsEvolution = {
       id: pokemon.id,
-      name: this.capitalizeFirstLetter(pokemon),
+      name: capitalizeFirstLetter(pokemon),
       image: this.getImage(pokemon),
       types,
       color: types[0],
       evolutions: [],
-      minLevel: 0,
-      trigger: '',
+      evolution: {
+        trigger: '',
+        method: '',
+      },
     }
 
     if (evolutionDetails[0]) {
-      formattedEvolution.trigger = this.getTrigger(
-        evolutionDetails[0].trigger.name,
-      )
-      formattedEvolution.minLevel = evolutionDetails[0].min_level
+      formattedEvolution.evolution = getEvolution(evolutionDetails[0])
     }
 
     return formattedEvolution
@@ -115,7 +89,7 @@ class PokemonFactory {
 
     return {
       id: pokemon.id,
-      name: this.capitalizeFirstLetter(pokemon),
+      name: capitalizeFirstLetter(pokemon),
       uri: this.getImage(pokemon),
       types: this.getTypes(pokemon),
       color: pokemon.types[0].type.name,
@@ -132,13 +106,13 @@ class PokemonFactory {
     return {
       ...this.PokemonCard(pokemon) as IPokemonCard,
       abilities: pokemon.abilities.map(
-        ({ ability }) => this.capitalizeFirstLetter(ability),
+        ({ ability }) => capitalizeFirstLetter(ability),
       ),
       weight: pokemon.weight / 10,
       height: pokemon.height,
       description: this.cleanDescription(description.flavor_text, pokemon.name),
-      habitat: this.capitalizeFirstLetter(pokemonSpecie.habitat),
-      version: this.capitalizeFirstLetter(description.version),
+      habitat: capitalizeFirstLetter(pokemonSpecie.habitat),
+      version: capitalizeFirstLetter(description.version),
       stats: this.getStats(pokemon.stats),
       evolution,
     }
