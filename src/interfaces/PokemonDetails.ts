@@ -1,5 +1,5 @@
 import type { ITypesPokemons } from '../utils'
-import { IEvolutionChain } from './PokemonEvolution'
+import { IEvolutionChain, IEvolutionTriggerMethod } from './PokemonEvolution'
 import { IPokemon, IPokemonCard } from './Pokemon'
 import { IPokemonSpecie } from './PokemonSpecie'
 
@@ -50,11 +50,10 @@ export interface IPokemonDetailsEvolution {
   id: number,
   name: string,
   image: string,
-  trigger?: string,
   color: ITypesPokemons,
   types: ITypesPokemons[],
   evolutions: IPokemonDetailsEvolution[]
-  minLevel: number
+  evolution: IEvolutionTriggerMethod
 }
 
 export interface IPokemonDetailsCard extends IPokemonCard {

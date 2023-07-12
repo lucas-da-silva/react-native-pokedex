@@ -10,7 +10,13 @@ import {
 import IScreens from './Screens'
 import IDetailsPokemonInfo from './DetailsPokemon'
 import { IPokemonSpecie, IPokemonSpecieFlavorText } from './PokemonSpecie'
-import { IEvolutionChain, IEvolution } from './PokemonEvolution'
+import {
+  IEvolutionChain,
+  IEvolution,
+  IEvolutionDetails,
+  IEvolutionTriggerMethod,
+  EvolutionTriggerName,
+} from './PokemonEvolution'
 
 export {
   IPokemonCard,
@@ -26,4 +32,7 @@ export {
   IPokemonCompleteDetails,
   IEvolution,
   IPokemonDetailsEvolution,
+  IEvolutionDetails,
+  IEvolutionTriggerMethod,
+  EvolutionTriggerName,
 }
