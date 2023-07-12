@@ -44,7 +44,8 @@ export default function Home({ navigation }: HomeProps) {
         || id === Number(searchPokemon),
     )
 
-    if (!filtered.length && searchPokemon.length >= SHORTEST_NAME_POKEMON) {
+    if (!filtered.length
+        && (/\d/.test(searchPokemon) || searchPokemon.length >= SHORTEST_NAME_POKEMON)) {
       const json = await fetchPokemon(searchPokemon)
       if (json) {
         const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard

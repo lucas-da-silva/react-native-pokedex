@@ -88,7 +88,7 @@ export default function DetailsPokemons({ route, navigation }: DetailsPokemonsPr
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
     backgroundColor: '#f5fbfb',
   },
   containerImage: {

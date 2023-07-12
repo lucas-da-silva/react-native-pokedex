@@ -9,14 +9,27 @@ import { PokemonFactory, TypesPokemons } from '../utils'
 export default function DetailsPokemonEvolution(
   { pokemon: { evolution }, handleEvolution }: IDetailsPokemonInfo,
 ) {
+  const validateEvolution = (level: string | number | undefined): boolean => {
+    if (!level) return false
+    return true
+  }
+
   const renderPokemon = ({
-    id, color, image, name, types, minLevel, trigger,
+    id, color, image, name, types, evolution: { trigger, method, css },
   }: IPokemonDetailsEvolution) => (
     <View style={styles.containerPokemon}>
-      {minLevel > 0 && (
-        <View style={styles.triggerContainer}>
+      {validateEvolution(method) && (
+        <View style={styles.nextEvolutionContainer}>
           <Ionicons name="md-arrow-forward-sharp" style={styles.arrowForward} />
-          <Text style={styles.trigger}>{`${trigger} ${minLevel}`}</Text>
+          <View style={styles.triggerContainer}>
+            <Text style={styles.trigger}>
+              {trigger}
+              <Text style={css}>
+                {' '}
+                {method}
+              </Text>
+            </Text>
+          </View>
         </View>
       )}
       <TouchableOpacity
@@ -27,7 +40,7 @@ export default function DetailsPokemonEvolution(
           styles.pokemonCard,
           {
             backgroundColor: TypesPokemons[color].color,
-            height: types.length > 1 ? 150 : 130,
+            height: types.length > 1 ? 155 : 135,
           },
         ]}
       >
@@ -85,32 +98,39 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   id: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#6a6e7a',
   },
   name: {
-    fontSize: 12,
+    fontSize: 11,
     marginBottom: 3,
     color: '#2c304f',
     fontWeight: 'bold',
   },
   typesContainer: {
-    marginBottom: 7,
+    marginBottom: 10,
   },
   type: {
     fontSize: 12,
     color: '#2c304f',
   },
-  triggerContainer: {
+  nextEvolutionContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+    width: 61,
   },
   arrowForward: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#6a6e7a',
   },
+  triggerContainer: {
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   trigger: {
-    fontSize: 12,
+    fontSize: 11,
+    textAlign: 'center',
   },
 })

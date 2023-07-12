@@ -10,6 +10,8 @@ export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
     abilities, weight, height, description, habitat, version,
   } = pokemon
 
+  const validateInfo = (info: string): boolean => info.length > 0
+
   const renderInfo = (label: string, value: string) => (
     <View style={styles.row}>
       <Text style={styles.field}>{label}</Text>
@@ -27,7 +29,7 @@ export default function DetailsPokemonAbout({ pokemon }: IDetailsPokemonInfo) {
       </View>
       {renderInfo('Height', `${heightToFeetAndInches(height)} (${height / 10} m)`)}
       {renderInfo('Weight', `${weightToLibra(weight)} (${weight} kg)`)}
-      {renderInfo('Habitat', habitat)}
+      {validateInfo(habitat) && renderInfo('Habitat', habitat)}
       {renderInfo('Abilities', abilities.join(', '))}
     </View>
   )
