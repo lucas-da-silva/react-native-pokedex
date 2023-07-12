@@ -1,4 +1,4 @@
-export const TypesPokemons = {
+const TypesPokemons = {
   grass: { color: '#c4e3d4' },
   fire: { color: '#ebbcb4' },
   water: { color: '#81bfff' },
@@ -19,4 +19,4 @@ export const TypesPokemons = {
   fairy: { color: '#ffabec' },
 }
 
-export type ITypesPokemons = keyof typeof TypesPokemons
+export default TypesPokemons

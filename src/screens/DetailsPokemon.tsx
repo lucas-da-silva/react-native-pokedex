@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5fbfb',
   },
   containerImage: {
-    marginTop: 20,
+    marginTop: 10,
     width: '100%',
     height: 225,
     marginLeft: 'auto',

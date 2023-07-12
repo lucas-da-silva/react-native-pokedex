@@ -21,7 +21,7 @@ export default function PokemonCard({
         style={[styles.container, { backgroundColor: TypesPokemons[color].color }]}
       >
         <View style={styles.containerId}>
-          <Text style={styles.id}>{PokemonFactory.PokemonID(id)}</Text>
+          <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
         </View>
         <View style={styles.containerImage}>
           <Image

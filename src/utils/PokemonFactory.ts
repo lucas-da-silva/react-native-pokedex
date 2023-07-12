@@ -8,10 +8,10 @@ import {
   IEvolution,
   IPokemonDetailsEvolution,
   IPokemonSpecie,
+  ITypesPokemon,
 } from '../interfaces'
 import getEvolution from './evolutionMapping'
-import { ITypesPokemons } from './TypesPokemons'
-import capitalizeFirstLetter from './formatString'
+import { capitalizeFirstLetter } from './formatString'
 
 class PokemonFactory {
   private cleanDescription(text: string, namePokemon: string): string {
@@ -50,7 +50,7 @@ class PokemonFactory {
     return pokemon.sprites.other['official-artwork'].front_default
   }
 
-  private getTypes(pokemon: IPokemonDetails): ITypesPokemons[] {
+  private getTypes(pokemon: IPokemonDetails): ITypesPokemon[] {
     return pokemon.types.map(({ type }) => type.name)
   }
 

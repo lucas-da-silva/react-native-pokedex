@@ -27,7 +27,7 @@ export default function DetailsPokemonHeader(
       </TouchableOpacity>
       <View style={styles.containerTitle}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.id}>{PokemonFactory.PokemonID(id)}</Text>
+        <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
       </View>
     </View>
   )
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   containerHeader: {
     flexDirection: 'row',
     marginTop: 20,
+    marginBottom: 10,
   },
   containerBackButton: {
     height: 28,
