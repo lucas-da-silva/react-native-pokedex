@@ -51,7 +51,7 @@ export default function Home({ navigation }: HomeProps) {
 
       if (!filtered.length
         && (/\d/.test(searchPokemon) || searchPokemon.length >= SHORTEST_NAME_POKEMON)) {
-        fetchPokemon(searchPokemon).then((json) => {
+        fetchPokemon(searchPokemon.toLowerCase()).then((json) => {
           if (json) {
             const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard
             setFilteredPokemons([pokemon])
