@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { TextInput, View, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { COLORS } from '../styles'
 
 type PokemonSearchInputProps = {
   searchPokemon: string,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 12,
     fontSize: 22,
-    color: '#2d2f58',
+    color: COLORS.primary,
   },
   input: {
     color: '#6a6d80',

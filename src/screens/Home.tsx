@@ -55,8 +55,9 @@ export default function Home({ navigation }: HomeProps) {
           if (json) {
             const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard
             setFilteredPokemons([pokemon])
+          } else {
+            setFilteredPokemons([])
           }
-          setFilteredPokemons([])
         })
       } else {
         setFilteredPokemons(filtered)

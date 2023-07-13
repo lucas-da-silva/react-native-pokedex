@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import type { IPokemonCard } from '../interfaces'
 import { TypesPokemons, PokemonFactory } from '../utils'
+import { COLORS } from '../styles'
 
 interface PokemonCardProps extends IPokemonCard {
   handlePress(id: number): void;
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   name: {
-    color: '#2d2f58',
+    color: COLORS.primary,
     fontWeight: 'bold',
     marginBottom: 2,
     fontSize: 17,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   },
   type: {
     fontSize: 13,
-    color: '#2d2f58',
+    color: COLORS.primary,
   },
 })
 
