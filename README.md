@@ -1,6 +1,8 @@
 # Mobile Pokedex App
 
-Try the demo on [![Expo Go](./docs/expo-logo.svg)](https://expo.dev/@lucas-da-silva/pokedex)
+https://github.com/lucas-da-silva/react-native-pokedex/assets/104774396/5d2d0818-e750-4bc6-bce9-884688834be2
+
+ <!-- Try the demo on [![Expo Go](./docs/expo-logo.svg)](https://expo.dev/@lucas-da-silva/pokedex) -->
 
 ## Features
 
