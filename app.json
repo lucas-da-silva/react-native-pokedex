@@ -33,6 +33,12 @@
         "projectId": "48f0841d-d39b-4831-b2f5-39cb0cbb95f4"
       }
     },
-    "owner": "lucas-da-silva"
+    "owner": "lucas-da-silva",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/48f0841d-d39b-4831-b2f5-39cb0cbb95f4"
+    }
   }
 }
