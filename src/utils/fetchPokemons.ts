@@ -23,9 +23,13 @@ type ResponsePokemon = {
 export const fetchPokemon = async (
   pokemon: number | string,
 ): Promise<IPokemonDetails | undefined> => {
-  const response = await fetch(`${POKEMON_URL}/${pokemon}`)
-  const json = await response.json() as IPokemonDetails
-  return json
+  try {
+    const response = await fetch(`${POKEMON_URL}/${pokemon}`)
+    const json = await response.json() as IPokemonDetails
+    return json
+  } catch (_error) {
+    return undefined
+  }
 }
 
 const fetchPokemonSpecie = async (url: string): Promise<IPokemonSpecie> => {

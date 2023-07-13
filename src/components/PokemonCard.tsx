@@ -9,42 +9,40 @@ interface PokemonCardProps extends IPokemonCard {
   handlePress(id: number): void;
 }
 
-export default function PokemonCard({
+const PokemonCard = React.memo(({
   name, id, uri, types, handlePress, color,
-}: PokemonCardProps) {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.6}
-      onPress={() => handlePress(id)}
+}: PokemonCardProps) => (
+  <TouchableOpacity
+    activeOpacity={0.6}
+    onPress={() => handlePress(id)}
+  >
+    <View
+      style={[styles.container, { backgroundColor: TypesPokemons[color].color }]}
     >
-      <View
-        style={[styles.container, { backgroundColor: TypesPokemons[color].color }]}
-      >
-        <View style={styles.containerId}>
-          <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
-        </View>
-        <View style={styles.containerImage}>
-          <Image
-            source={{
-              uri,
-            }}
-            style={styles.image}
-          />
-        </View>
-        <Text style={styles.name}>{name}</Text>
-        <View style={styles.containerTypes}>
-          {
-            types.map((type) => (
-              <View key={type} style={styles.containerType}>
-                <Text style={styles.type}>{type}</Text>
-              </View>
-            ))
-          }
-        </View>
+      <View style={styles.containerId}>
+        <Text style={styles.id}>{`#${PokemonFactory.PokemonID(id)}`}</Text>
       </View>
-    </TouchableOpacity>
-  )
-}
+      <View style={styles.containerImage}>
+        <Image
+          source={{
+            uri,
+          }}
+          style={styles.image}
+        />
+      </View>
+      <Text style={styles.name}>{name}</Text>
+      <View style={styles.containerTypes}>
+        {
+          types.map((type) => (
+            <View key={type} style={styles.containerType}>
+              <Text style={styles.type}>{type}</Text>
+            </View>
+          ))
+        }
+      </View>
+    </View>
+  </TouchableOpacity>
+))
 
 const styles = StyleSheet.create({
   container: {
@@ -94,3 +92,5 @@ const styles = StyleSheet.create({
     color: '#2d2f58',
   },
 })
+
+export default PokemonCard

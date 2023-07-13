@@ -3,26 +3,34 @@ import { View, StyleSheet } from 'react-native'
 import { POKEMON_LIMIT } from '../utils'
 
 export default function SkeletonPokemonCard() {
+  const skeletons = Array.from({ length: POKEMON_LIMIT })
+
   return (
-    <>
-      {[...Array(POKEMON_LIMIT)].map((_, index) => (
+    <View style={styles.skeletonContainer}>
+      {skeletons.map((_, index) => (
         <View style={styles.skeletonCard} key={index}>
           <View style={styles.skeletonId} />
           <View style={styles.skeletonImage} />
           <View style={styles.skeletonInfo}>
             <View style={styles.skeletonName} />
             <View style={styles.skeletonTypes}>
-              <View style={styles.skeletonType} />
+              <View style={[styles.skeletonType, { marginRight: 8 }]} />
               <View style={styles.skeletonType} />
             </View>
           </View>
         </View>
       ))}
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  skeletonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   skeletonCard: {
     marginBottom: 15,
     marginHorizontal: 7.5,

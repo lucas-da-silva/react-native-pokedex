@@ -5,6 +5,7 @@ import DetailsPokemonAbout from './DetailsPokemonAbout'
 import SkeletonPokemonCard from './SkeletonPokemonCard'
 import SkeletonDetailsPokemon from './SkeletonDetailsPokemon'
 import PokemonSearchInput from './PokemonSearchInput'
+import PokemonNotFound from './PokemonNotFound'
 
 export {
   PokemonCard,
@@ -14,4 +15,5 @@ export {
   SkeletonDetailsPokemon,
   PokemonSearchInput,
   SkeletonPokemonCard,
+  PokemonNotFound,
 }
