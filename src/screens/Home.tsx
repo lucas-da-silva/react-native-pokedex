@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { debounce } from 'lodash'
 import {
-  ScrollView, StyleSheet, View, Text, StatusBar,
+  KeyboardAvoidingView, FlatList, StyleSheet, View, Text, StatusBar,
 } from 'react-native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { debounce } from 'lodash'
 import {
   fetchPokemon, fetchPokemons, POKEMON_LIMIT, PokemonFactory,
 } from '../utils'
 import type { IPokemonCard, IScreens } from '../interfaces'
-import { PokemonCard, PokemonSearchInput, SkeletonPokemonCard } from '../components'
+import {
+  PokemonCard, PokemonNotFound, PokemonSearchInput, SkeletonPokemonCard,
+} from '../components'
+import { BACKGROUND_COLOR, COLORS } from '../styles'
 
 type HomeProps = {
   navigation: NativeStackNavigationProp<IScreens, 'Home'>,
@@ -17,7 +20,7 @@ type HomeProps = {
 const SHORTEST_NAME_POKEMON = 5
 
 export default function Home({ navigation }: HomeProps) {
-  const [pokemons, setPokemons] = useState<[] | IPokemonCard[]>([])
+  const [pokemons, setPokemons] = useState<IPokemonCard[]>([])
   const [filteredPokemons, setFilteredPokemons] = useState<IPokemonCard[]>([])
   const [searchPokemon, setSearchPokemon] = useState('')
   const [loadingPokemons, setLoadingPokemons] = useState(true)
@@ -29,40 +32,43 @@ export default function Home({ navigation }: HomeProps) {
       const fetchedPokemons = await fetchPokemons()
       setPokemons(fetchedPokemons)
       setFilteredPokemons(fetchedPokemons)
+      setLoadingPokemons(false)
     }
     fetchData()
-    setLoadingPokemons(false)
   }, [])
 
-  const debouncedSearch = debounce(async () => {
-    if (!searchPokemon.trim()) {
-      return setFilteredPokemons(pokemons)
-    }
-
-    const filtered: [] | IPokemonCard[] = pokemons.filter(
-      ({ id, name }) => name.toLowerCase().includes(searchPokemon.toLowerCase())
-        || id === Number(searchPokemon),
-    )
-
-    if (!filtered.length
-        && (/\d/.test(searchPokemon) || searchPokemon.length >= SHORTEST_NAME_POKEMON)) {
-      const json = await fetchPokemon(searchPokemon)
-      if (json) {
-        const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard
-        return setFilteredPokemons([pokemon])
-      }
-    }
-
-    return setFilteredPokemons(filtered)
-  }, 500)
-
   useEffect(() => {
+    const debouncedSearch = debounce(() => {
+      if (!searchPokemon.trim()) {
+        setFilteredPokemons(pokemons)
+        return
+      }
+
+      const filtered = pokemons.filter(
+        ({ id, name }) => name.toLowerCase().includes(searchPokemon.toLowerCase())
+          || id === Number(searchPokemon),
+      )
+
+      if (!filtered.length
+        && (/\d/.test(searchPokemon) || searchPokemon.length >= SHORTEST_NAME_POKEMON)) {
+        fetchPokemon(searchPokemon).then((json) => {
+          if (json) {
+            const pokemon = PokemonFactory.PokemonCard(json) as IPokemonCard
+            setFilteredPokemons([pokemon])
+          }
+          setFilteredPokemons([])
+        })
+      } else {
+        setFilteredPokemons(filtered)
+      }
+    }, 500)
+
     debouncedSearch()
 
     return () => {
       debouncedSearch.cancel()
     }
-  }, [searchPokemon])
+  }, [searchPokemon, pokemons])
 
   const loadMorePokemons = async () => {
     if (loading || filteredPokemons.length < POKEMON_LIMIT) return
@@ -81,60 +87,63 @@ export default function Home({ navigation }: HomeProps) {
     navigation.navigate('DetailsPokemon', { id })
   }, [navigation])
 
+  const renderPokemonCard = ({ item }: { item: IPokemonCard }) => (
+    <PokemonCard
+      name={item.name}
+      id={item.id}
+      uri={item.uri}
+      types={item.types}
+      color={item.color}
+      handlePress={handleDetailsPokemon}
+    />
+  )
+
+  const renderSkeletonPokemonCard = () => <SkeletonPokemonCard />
+
+  const renderListFooter = () => {
+    if (loading) {
+      return renderSkeletonPokemonCard()
+    }
+    return null
+  }
+
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
-      <View style={styles.containerTitle}>
-        <Text style={styles.title}>Pokédex</Text>
-        <Text style={styles.subtitle}>
-          Search for a Pokémon by name or using its National Pokédex number.
-        </Text>
-      </View>
-      <PokemonSearchInput
-        searchPokemon={searchPokemon}
-        setSearchPokemon={setSearchPokemon}
-      />
-      {(pokemons.length > 0 && !filteredPokemons.length)
-        && <Text>Pokemon not found.</Text>}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        onScroll={({ nativeEvent }) => {
-          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent
-          const isEndReached = layoutMeasurement.height + contentOffset.y
-          >= contentSize.height - 100
-          if (isEndReached) {
-            loadMorePokemons()
-          }
-        }}
-        scrollEventThrottle={16}
-      >
-        <View style={styles.containerPokemons}>
-          {loadingPokemons ? <SkeletonPokemonCard /> : filteredPokemons.map(({
-            name, id, uri, types, color,
-          }) => (
-            <PokemonCard
-              name={name}
-              key={id}
-              id={id}
-              uri={uri}
-              types={types}
-              color={color}
-              handlePress={handleDetailsPokemon}
-            />
-          ))}
-          {loading && <SkeletonPokemonCard />}
+      <KeyboardAvoidingView behavior="padding">
+        <StatusBar barStyle="dark-content" backgroundColor="#f5fbfb" />
+        <View style={styles.containerTitle}>
+          <Text style={styles.title}>Pokédex</Text>
+          <Text style={styles.subtitle}>
+            Search for a Pokémon by name or using its National Pokédex number.
+          </Text>
         </View>
-      </ScrollView>
+        <PokemonSearchInput
+          searchPokemon={searchPokemon}
+          setSearchPokemon={setSearchPokemon}
+        />
+      </KeyboardAvoidingView>
+      {pokemons.length > 0 && filteredPokemons.length === 0 && <PokemonNotFound />}
+      {loadingPokemons ? renderSkeletonPokemonCard() : (
+        <FlatList
+          data={filteredPokemons}
+          numColumns={2}
+          renderItem={renderPokemonCard}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.containerPokemons}
+          ListFooterComponent={renderListFooter()}
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadMorePokemons}
+          onEndReachedThreshold={0.1}
+        />
+      )}
     </View>
-
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5fbfb',
-    justifyContent: 'center',
+    backgroundColor: BACKGROUND_COLOR,
     paddingHorizontal: 28,
   },
   containerTitle: {
@@ -143,16 +152,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: '#2d2f58',
+    color: COLORS.primary,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   subtitle: {
-    color: '#656a81',
+    color: COLORS.secundary,
   },
   containerPokemons: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
   },
